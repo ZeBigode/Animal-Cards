@@ -1,0 +1,115 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Texture/bg/bc_logo.png" type="Texture" id=1]
+[ext_resource path="res://resourse/Fonts/N_cards.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sprites/icon_btns4.png" type="Texture" id=3]
+[ext_resource path="res://resourse/sons/som_logotipo.ogg" type="AudioStream" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+onready var cena_cadast = \"res://Scenes/Inicial_perfil.tscn\"
+
+onready var request = $HTTPRequest
+
+func _ready():
+	if ArquivosSaveOff.dados_save_off[5] != \"\":
+		TranslationServer.set_locale(ArquivosSaveOff.dados_save_off[5])
+	else:
+		var system_language = OS.get_locale()
+		if system_language == \"pt_BR\":
+			 TranslationServer.set_locale(\"pt_BR\")
+		elif system_language == \"de_DE\":
+			 TranslationServer.set_locale(\"de_DE\")
+		elif system_language == \"es_ES\":
+			 TranslationServer.set_locale(\"es_ES\")
+		elif system_language == \"fr_FR\":
+			 TranslationServer.set_locale(\"fr_FR\")
+		else:
+			TranslationServer.set_locale(\"en_US\")
+
+	request.connect(\"request_completed\", self, \"_on_request_completed\")
+	request.request(\"http://www.google.com\")
+	$som.play()
+	yield(get_tree().create_timer(2.90),\"timeout\")
+	$som.stop()
+
+func _on_request_completed(result ,_respon, _adada,_dddd):
+	if result != OK:
+		request.request(\"http://www.google.com\")
+	else:
+		$timer.start()
+		pass
+
+func _on_timer_timeout():
+	while not DataTime.dataok:
+		yield(get_tree(), \"idle_frame\")
+	
+	var logins = ArquivosSaveOff.login_save_off
+	if logins[0] == \"true\" :
+		var _scena = get_tree().change_scene(\"res://Scenes/Entrar.tscn\")
+	else:
+		var _scena = get_tree().change_scene(cena_cadast)
+
+
+
+func _on_som_finished():
+	$som.stop()
+"
+
+[sub_resource type="DynamicFont" id=2]
+size = 130
+outline_size = 5
+outline_color = Color( 0.156863, 0.117647, 0.0470588, 1 )
+font_data = ExtResource( 2 )
+
+[node name="loading" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
+
+[node name="bg" type="TextureRect" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="name" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -168.5
+margin_top = -164.0
+margin_right = 168.5
+margin_bottom = -34.0
+custom_colors/font_color = Color( 0.572549, 0.423529, 0.180392, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "GAMES"
+align = 1
+valign = 1
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 588.5, 368.5 )
+scale = Vector2( 4.92333, 8.37 )
+texture = ExtResource( 3 )
+energy = 0.35
+
+[node name="som" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+[connection signal="finished" from="som" to="." method="_on_som_finished"]

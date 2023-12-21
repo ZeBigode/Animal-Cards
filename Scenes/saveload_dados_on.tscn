@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/icons_mesa/bg.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Arquivos_save.gd" type="Script" id=2]
+
+[node name="saveload_dados_on" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="notific" type="Label" parent="."]
+margin_left = 199.0
+margin_top = 310.0
+margin_right = 1068.0
+margin_bottom = 397.0
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0, 0.0156863, 0.137255, 1 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

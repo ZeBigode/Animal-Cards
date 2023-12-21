@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://resourse/Linguagem/linguas.pt_BR.translation", "res://resourse/Linguagem/linguas.de_DE.translation", "res://resourse/Linguagem/linguas.es_ES.translation", "res://resourse/Linguagem/linguas.fr_FR.translation", "res://resourse/Linguagem/linguas.en_US.translation" ]
+
+source_file="res://resourse/Linguagem/linguas.csv"
+dest_files=[ "res://resourse/Linguagem/linguas.pt_BR.translation", "res://resourse/Linguagem/linguas.de_DE.translation", "res://resourse/Linguagem/linguas.es_ES.translation", "res://resourse/Linguagem/linguas.fr_FR.translation", "res://resourse/Linguagem/linguas.en_US.translation" ]
+
+[params]
+
+compress=true
+delimiter=0

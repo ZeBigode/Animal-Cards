@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/cards_p_mao.ogg-093f87a10a5fcab488d01f117ef7b1e6.oggstr"
+
+[deps]
+
+source_file="res://resourse/sons/cards_p_mao.ogg"
+dest_files=[ "res://.import/cards_p_mao.ogg-093f87a10a5fcab488d01f117ef7b1e6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,241 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://resourse/Fonts/N_cards.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Sprites/icon_btn_long.png" type="Texture" id=2]
+[ext_resource path="res://Texture/bg/bc_logo.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/icon_btns2.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/icon_seta.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/icons_mesa/bg.png" type="Texture" id=6]
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends Node2D
+
+onready var http : HTTPRequest = $HTTPRequest
+onready var useremail : LineEdit = $email_edit
+onready var password : LineEdit = $senha_edit
+onready var confirm : LineEdit = $senha_edit2
+onready var notification : Label = $notfic
+
+
+
+
+func _on_HTTPRequest_request_completed(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray) -> void:
+	var response_body := JSON.parse(body.get_string_from_ascii())
+	if response_code != 200:
+		notification.text = response_body.result.error.message.capitalize()
+		
+	else:
+		notification.text = \"Registration sucessful!\"
+		ArquivosSaveOff.login_save_off  = [ \"true\" ,  useremail.text  ,  password.text ]
+		ArquivosSaveOff.save_arquivo_login_off()
+		
+		yield(get_tree().create_timer(1.0), \"timeout\")
+		get_tree().change_scene(\"res://Scenes/Insert_nickname.tscn\")
+		
+	
+
+
+
+func _on_Button_pressed():
+	var _scena = get_tree().change_scene(\"res://Scenes/Inicial_perfil.tscn\")
+
+func limpa_notifi():
+	yield(get_tree().create_timer(2.0), \"timeout\")
+	notification.text = \"\"
+
+func _on_btn_entrar_pressed():
+	if password.text != confirm.text or useremail.text.empty() or password.text.empty():
+		notification.text = \"Invalid password or Email\"
+		limpa_notifi()
+		return
+	FireBase.register(useremail.text, password.text, http)
+"
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+outline_size = 4
+outline_color = Color( 0.0156863, 0.270588, 0.454902, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 35
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 130
+outline_size = 5
+outline_color = Color( 0.156863, 0.117647, 0.0470588, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 44
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+outline_size = 1
+outline_color = Color( 0.0666667, 0, 0.854902, 1 )
+font_data = ExtResource( 1 )
+
+[node name="Inicial_perfil" type="Node2D"]
+script = SubResource( 4 )
+
+[node name="bg" type="Sprite" parent="."]
+modulate = Color( 0.0509804, 0.321569, 0.666667, 1 )
+position = Vector2( 641.5, 360.5 )
+scale = Vector2( 1.03516, 1.05694 )
+texture = ExtResource( 6 )
+
+[node name="icon_logo" type="Sprite" parent="."]
+position = Vector2( 945, 365 )
+scale = Vector2( 1.443, 1.38938 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 97.2146, -208.071, 482.895, 767.152 )
+
+[node name="bg_email" type="Sprite" parent="."]
+position = Vector2( 300, 99.675 )
+scale = Vector2( 0.325, 0.22 )
+texture = ExtResource( 4 )
+
+[node name="email_inf" type="Label" parent="."]
+margin_left = 158.537
+margin_top = 56.0
+margin_right = 440.537
+margin_bottom = 143.0
+custom_fonts/font = SubResource( 1 )
+text = "P_EMAIL"
+align = 1
+valign = 1
+clip_text = true
+
+[node name="email_edit" type="LineEdit" parent="."]
+margin_left = 129.0
+margin_top = 150.0
+margin_right = 469.0
+margin_bottom = 224.0
+custom_fonts/font = SubResource( 5 )
+align = 1
+placeholder_text = "aaaaaaa@gmail.com"
+placeholder_alpha = 0.357
+
+[node name="btn_entrar" type="Button" parent="."]
+margin_left = 161.0
+margin_top = 647.0
+margin_right = 436.0
+margin_bottom = 710.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+action_mode = 0
+enabled_focus_mode = 0
+text = "P_CRIAR"
+icon = ExtResource( 2 )
+flat = true
+clip_text = true
+icon_align = 1
+expand_icon = true
+
+[node name="name" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 776.0
+margin_top = 550.0
+margin_right = 1113.0
+margin_bottom = 680.0
+custom_colors/font_color = Color( 0.572549, 0.423529, 0.180392, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "GAMES"
+align = 1
+valign = 1
+
+[node name="bg_email2" type="Sprite" parent="."]
+position = Vector2( 303, 273.675 )
+scale = Vector2( 0.360505, 0.22 )
+texture = ExtResource( 4 )
+
+[node name="senha_inf" type="Label" parent="."]
+margin_left = 148.0
+margin_top = 230.0
+margin_right = 458.0
+margin_bottom = 317.0
+custom_fonts/font = SubResource( 1 )
+text = "P_SENHAR"
+align = 1
+valign = 1
+clip_text = true
+
+[node name="senha_edit" type="LineEdit" parent="."]
+margin_left = 129.0
+margin_top = 323.0
+margin_right = 469.0
+margin_bottom = 397.0
+custom_fonts/font = SubResource( 3 )
+align = 1
+max_length = 10
+secret = true
+placeholder_text = "*"
+placeholder_alpha = 0.195
+
+[node name="bg_senha2" type="Sprite" parent="."]
+position = Vector2( 300, 454.675 )
+scale = Vector2( 0.325, 0.22 )
+texture = ExtResource( 4 )
+
+[node name="senha_inf2" type="Label" parent="."]
+margin_left = 158.0
+margin_top = 411.0
+margin_right = 440.0
+margin_bottom = 498.0
+custom_fonts/font = SubResource( 1 )
+text = "P_CONFIRME"
+align = 1
+valign = 1
+clip_text = true
+
+[node name="senha_edit2" type="LineEdit" parent="."]
+margin_left = 129.0
+margin_top = 504.0
+margin_right = 469.0
+margin_bottom = 578.0
+custom_fonts/font = SubResource( 3 )
+align = 1
+max_length = 10
+secret = true
+placeholder_text = "*"
+placeholder_alpha = 0.168
+
+[node name="Button" type="Button" parent="."]
+margin_left = 85.0
+margin_top = 54.0
+margin_right = 170.0
+margin_bottom = 107.0
+rect_rotation = 180.0
+focus_mode = 0
+action_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 5 )
+flat = true
+icon_align = 1
+expand_icon = true
+
+[node name="notfic" type="Label" parent="."]
+margin_left = 5.0
+margin_top = 584.0
+margin_right = 595.0
+margin_bottom = 648.0
+custom_fonts/font = SubResource( 6 )
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="btn_entrar" to="." method="_on_btn_entrar_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

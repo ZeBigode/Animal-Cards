@@ -1,0 +1,50 @@
+[gd_resource type="Theme" load_steps=8 format=2]
+
+[ext_resource path="res://Sprites/icon_tabconteiner.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/icon_tabconteiner_bg1.png" type="Texture" id=2]
+[ext_resource path="res://resourse/Fonts/N_cards.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 600, 580 )
+margin_left = 9.0
+margin_right = 5.0
+margin_top = 14.9641
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=20]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 200, 80.4463 )
+margin_left = 80.0
+margin_right = 80.0
+margin_top = 22.0
+expand_margin_left = 4.0
+expand_margin_bottom = 3.0
+modulate_color = Color( 0.545098, 0.545098, 0.545098, 1 )
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 200, 80 )
+margin_left = 40.0
+margin_right = 60.0
+margin_top = 26.0
+expand_margin_left = 27.0
+expand_margin_bottom = 25.0
+axis_stretch_horizontal = 1
+
+[sub_resource type="DynamicFont" id=18]
+size = 29
+outline_size = 4
+outline_color = Color( 0.105882, 0.105882, 0.105882, 1 )
+font_data = ExtResource( 3 )
+
+[resource]
+default_font = SubResource( 18 )
+/colors/cor = Color( 0.870588, 0.839216, 0.0705882, 1 )
+TabContainer/colors/font_color_bg = Color( 0.345098, 0.286275, 0.286275, 1 )
+TabContainer/colors/font_color_disabled = Color( 1, 1, 1, 0.2 )
+TabContainer/colors/font_color_fg = Color( 1, 1, 1, 1 )
+TabContainer/styles/panel = SubResource( 16 )
+TabContainer/styles/tab_bg = SubResource( 20 )
+TabContainer/styles/tab_disabled = null
+TabContainer/styles/tab_fg = SubResource( 17 )

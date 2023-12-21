@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/derrota.ogg-db47a904bd4a8bd77bbcb5faddb82b58.oggstr"
+
+[deps]
+
+source_file="res://resourse/sons/derrota.ogg"
+dest_files=[ "res://.import/derrota.ogg-db47a904bd4a8bd77bbcb5faddb82b58.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
